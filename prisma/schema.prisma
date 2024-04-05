@@ -12,3 +12,46 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model BlackSpot {
+  id        String   @id @default(cuid())
+  name      String
+  latitude  String
+  longitude String
+  votes     Upvote[]
+}
+
+model City {
+  id        String         @id @default(cuid())
+  name      String
+  districts CityDistrict[]
+}
+
+model CityDistrict {
+  id            String          @id @default(cuid())
+  city          City            @relation(fields: [cityId], references: [id])
+  cityId        String
+  plzCodes      String[]
+  SubjectOffice SubjectOffice[]
+}
+
+model SubjectOffice {
+  id         String       @id @default(cuid())
+  name       String
+  district   CityDistrict @relation(fields: [districtId], references: [id])
+  districtId String
+}
+
+enum SpotActionType {
+  CREATED
+  TRANSFERRED
+  FINNISHED
+}
+
+model Upvote {
+  id     String    @id @default(cuid())
+  spot   BlackSpot @relation(fields: [spotId], references: [id])
+  spotId String
+
+  createdAt DateTime @default(now())
+}

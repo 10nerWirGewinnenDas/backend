@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 'user'
+      POSTGRES_USER: 'root'
+      POSTGRES_DB: 'touristapp'
+    volumes:
+      - "db:/var/lib/postgresql"
+    ports:
+      - "5432:5432"
+
+volumes:
+  db:
+
