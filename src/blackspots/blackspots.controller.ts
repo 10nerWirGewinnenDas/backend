@@ -1,6 +1,6 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {BlackSpotsService} from "./blackspots.service";
-import {CreateUpvoteDto} from "./upvotes.dto";
+import {CreateUpvoteDto} from "./dto/upvotes.dto";
 
 @Controller('blackspots')
 export class BlackSpotsController {
