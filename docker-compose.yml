@@ -12,6 +12,21 @@ services:
     ports:
       - "5432:5432"
 
+  traefik:
+    image: traefik:v2.5
+    command:
+      - "--providers.docker=true"
+      - "--entryPoints.web.address=:80"
+    ports:
+      - "80:80"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    labels:
+      - "traefik.http.routers.mein-service.rule=Host(`mein-service.example.com`)"
+      - "traefik.http.services.mein-service.loadbalancer.server.port=3000"
+      - "traefik.http.services.mein-service.loadbalancer.server.scheme=http"
+      - "traefik.http.services.mein-service.loadbalancer.servers[0].url=http://host.docker.internal:3000"
+
 volumes:
   db:
 
