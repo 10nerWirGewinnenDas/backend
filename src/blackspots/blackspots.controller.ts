@@ -54,6 +54,8 @@ export class BlackSpotsController {
   })
   findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number){
     if(topLeftLat){
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       return this.prisma.blackSpot.findMany({
         where: {
           latitude: {
@@ -64,6 +66,21 @@ export class BlackSpotsController {
             gte: topLeftLng,
             lte: bottomRightLng
           }
+        },
+        include: {
+          _count: {
+            select: {
+              votes: {
+                where: {
+                  type: VoteType.UP,
+                  createdAt: {
+                    gte: thirtyDaysAgo
+                  }
+                }
+              }
+            }
+          },
+          comments: true
         }
       });
     }else{
