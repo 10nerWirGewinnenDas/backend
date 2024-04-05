@@ -10,6 +10,9 @@ export class Comment {
   @ApiProperty({ type: String })
   spotId: string;
 
+  @ApiProperty({ type: String })
+  text: string;
+
   @ApiProperty({ type: Date })
   createdAt: Date;
 }

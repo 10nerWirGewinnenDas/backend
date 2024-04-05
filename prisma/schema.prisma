@@ -94,5 +94,6 @@ model Comment {
   authorName String?
   spot       BlackSpot @relation(fields: [spotId], references: [id])
   spotId     String
+  text       String
   createdAt  DateTime  @default(now())
 }

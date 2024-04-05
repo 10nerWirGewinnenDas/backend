@@ -19,6 +19,7 @@ export class BlackSpotCommentsController {
         },
         authorName: dto.authorName,
         createdAt: new Date(),
+        text: dto.text
       }
     })
   }
