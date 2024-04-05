@@ -21,12 +21,12 @@ datasource db {
 }
 
 model BlackSpot {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   name        String
   description String
   latitude    Float
   longitude   Float
-  votes       Upvote[]
+  votes       Vote[]
 }
 
 model Category {
@@ -66,10 +66,16 @@ enum SpotActionType {
   FINNISHED
 }
 
-model Upvote {
+model Vote {
   id        String    @id @default(cuid())
+  type      VoteType
   spot      BlackSpot @relation(fields: [spotId], references: [id])
   spotId    String
   createdAt DateTime  @default(now())
   voterId   String    @default(uuid())
+}
+
+enum VoteType {
+  UP
+  DOWN
 }

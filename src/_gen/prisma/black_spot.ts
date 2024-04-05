@@ -1,4 +1,4 @@
-import { Upvote } from './upvote';
+import { Vote } from './vote';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class BlackSpot {
@@ -17,6 +17,6 @@ export class BlackSpot {
   @ApiProperty({ type: Number })
   longitude: number;
 
-  @ApiProperty({ isArray: true, type: () => Upvote })
-  votes: Upvote[];
+  @ApiProperty({ isArray: true, type: () => Vote })
+  votes: Vote[];
 }
