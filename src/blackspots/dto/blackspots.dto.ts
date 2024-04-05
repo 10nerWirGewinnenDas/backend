@@ -1,7 +1,7 @@
 import {ApiProperty, IntersectionType, OmitType} from "@nestjs/swagger";
 import {PrismaModel} from "../../_gen/prisma";
 
-export class CreateBlackSpotDto extends OmitType(PrismaModel.BlackSpot, ["id", "votes"]){
+export class CreateBlackSpotDto extends OmitType(PrismaModel.BlackSpot, ["id", "votes", "category", "comments", "finished", "finished"]){
     @ApiProperty({required: false})
     voterId?: string;
 }

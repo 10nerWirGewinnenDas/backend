@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {Cron} from "@nestjs/schedule";
+import {VoteType} from "@prisma/client";
 
 @Injectable()
 export class BlackSpotsService {

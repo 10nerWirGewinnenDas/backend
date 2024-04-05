@@ -38,7 +38,14 @@ export class BlackSpotsController {
             type: VoteType.UP,
             voterId: dto.voterId
           }
-        }
+        },
+        category: {
+          connect: {
+            id: dto.categoryId
+          }
+        },
+        archived: false,
+        finished: false
       },
       include: {
         votes: true
