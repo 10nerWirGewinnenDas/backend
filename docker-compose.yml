@@ -1,12 +1,12 @@
 version: '3'
 
 services:
-  db:
+  blackspots-db:
     image: postgres
     environment:
       POSTGRES_PASSWORD: 'user'
       POSTGRES_USER: 'root'
-      POSTGRES_DB: 'touristapp'
+      POSTGRES_DB: 'blackspots'
     volumes:
       - "db:/var/lib/postgresql"
     ports:
