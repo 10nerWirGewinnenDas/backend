@@ -1,16 +1,35 @@
-import {Body, Controller, Get, Post, Query} from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  ForbiddenException,
+  Get, Param,
+  Post,
+  Query,
+  Req,
+  Response, StreamableFile,
+  UploadedFile,
+  UseInterceptors
+} from '@nestjs/common';
 import {BlackSpotsService} from "./blackspots.service";
 import {PrismaService} from "../prisma/prisma.service";
 import {BlackSpotCreatedDto, CreateBlackSpotDto, GetBlackSpotDto} from "./dto/blackspots.dto";
-import {ApiOkResponse, ApiProperty, ApiQuery} from "@nestjs/swagger";
+import {ApiBody, ApiConsumes, ApiOkResponse, ApiProperty, ApiQuery, ApiResponse} from "@nestjs/swagger";
 import {VoteType} from "@prisma/client";
 import {CreateVoteDto, GetVoteDto} from './dto/upvotes.dto';
+import {Request, Response as Res} from "express";
+import {ConfigService} from "@nestjs/config";
+import {JwtModule, JwtService} from "@nestjs/jwt";
+import {FileInterceptor} from "@nestjs/platform-express";
+import {FileUploadDto} from "../dto/file-upload.dto";
+import * as fs from "fs";
 
 @Controller('blackspots')
 export class BlackSpotsController {
   constructor(
     private readonly blackSpotsService: BlackSpotsService,
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService
   ) {}
 
   @Get()
@@ -56,8 +75,8 @@ export class BlackSpotsController {
   @ApiOkResponse({
     type: BlackSpotCreatedDto
   })
-  create(@Body() dto: CreateBlackSpotDto){
-    return this.prisma.blackSpot.create({
+  async create(@Body() dto: CreateBlackSpotDto, @Response() res: Res){
+    const spot = await this.prisma.blackSpot.create({
       data: {
         name: dto.name,
         description: dto.description,
@@ -81,6 +100,48 @@ export class BlackSpotsController {
         votes: true
       }
     })
+
+    const token = this.jwtService.sign({type: "imageUpload", id: spot.id});
+
+    return res.set({'X-Upload-Token': token}).json(spot);
+  }
+
+  @Post(":id/image")
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    description: 'File',
+    type: FileUploadDto,
+  })
+  async uploadImage(@Param("id") blackSpotId: string, @Req() request: Request, @UploadedFile() file: Express.Multer.File){
+    if(request.headers["x-upload-token"]){
+      try{
+        const token = this.jwtService.verify(request.headers["x-upload-token"] as string);
+        if(token.id !== blackSpotId || token.type !== "imageUpload"){
+          throw new BadRequestException("Token falsch du dummer Hurensohn")
+        }
+
+        if(file.originalname.endsWith('.png') || file.originalname.endsWith('.jpg')){
+          await fs.promises.writeFile(`./uploads/${token.id}.${file.originalname.split('.')[file.originalname.split('.').length-1]}`, file.buffer);
+        }
+      }catch (e) {
+        console.log(e)
+        throw new ForbiddenException("Invalid token");
+      }
+    }else{
+      throw new ForbiddenException("No token du bastard")
+    }
+  }
+
+  @Get(":id/image")
+  @ApiResponse({
+    status: 200,
+    schema: {
+      type: "file"
+    }
+  })
+  getImage(@Param("id") blackSpotId: string){
+    return new StreamableFile(fs.createReadStream(`./uploads/${blackSpotId}.png`));
   }
 
   @Post(":id/vote")
