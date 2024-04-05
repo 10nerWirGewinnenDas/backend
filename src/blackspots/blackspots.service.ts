@@ -27,6 +27,7 @@ export class BlackSpotsService {
           select: {
             votes: {
               where: {
+                type: VoteType.UP,
                 createdAt: {
                   gte: thirtyDaysAgo
                 }
