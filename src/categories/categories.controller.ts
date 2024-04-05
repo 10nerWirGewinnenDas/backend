@@ -13,22 +13,7 @@ export class CategoriesController {
   @ApiOkResponse({
     type: [GetCategoryDto]
   })
-  findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number){
-    if(!topLeftLat){
-      return this.prisma.category.findMany();
-    }else{
-      return this.prisma.blackSpot.findMany({
-        where: {
-          latitude: {
-            gte: bottomRightLat,
-            lte: topLeftLat
-          },
-          longitude: {
-            gte: topLeftLng,
-            lte: bottomRightLng
-          }
-        }
-      });
-    }
+  findAll(){
+    return this.prisma.category.findMany();
   }
 }

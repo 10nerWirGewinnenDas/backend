@@ -1,8 +1,8 @@
-import {Body, Controller, Get, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Query} from '@nestjs/common';
 import {BlackSpotsService} from "./blackspots.service";
 import {PrismaService} from "../prisma/prisma.service";
 import {BlackSpotCreatedDto, CreateBlackSpotDto, GetBlackSpotDto} from "./dto/blackspots.dto";
-import {ApiOkResponse} from "@nestjs/swagger";
+import {ApiOkResponse, ApiProperty, ApiQuery} from "@nestjs/swagger";
 import {VoteType} from "@prisma/client";
 import {CreateVoteDto, GetVoteDto} from './dto/upvotes.dto';
 
@@ -17,8 +17,39 @@ export class BlackSpotsController {
   @ApiOkResponse({
     type: GetBlackSpotDto
   })
-  findAll(){
-    return this.blackSpotsService.findAll();
+  @ApiQuery({
+    name: "topLeftLat",
+    required: false
+  })
+  @ApiQuery({
+    name: "topLeftLng",
+    required: false
+  })
+  @ApiQuery({
+    name: "bottomRightLat",
+    required: false
+  })
+  @ApiQuery({
+    name: "bottomRightLng",
+    required: false
+  })
+  findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number){
+    if(topLeftLat){
+      return this.prisma.blackSpot.findMany({
+        where: {
+          latitude: {
+            gte: bottomRightLat,
+            lte: topLeftLat
+          },
+          longitude: {
+            gte: topLeftLng,
+            lte: bottomRightLng
+          }
+        }
+      });
+    }else{
+      return this.blackSpotsService.findAll();
+    }
   }
 
   @Post()
