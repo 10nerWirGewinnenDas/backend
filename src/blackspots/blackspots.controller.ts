@@ -5,7 +5,7 @@ import {BlackSpotCreatedDto, CreateBlackSpotDto, GetBlackSpotDto} from "./dto/bl
 import {ApiOkResponse} from "@nestjs/swagger";
 import {v4} from "uuid";
 import {VoteType} from "@prisma/client";
-import { CreateVoteDto } from './dto/upvotes.dto';
+import {CreateVoteDto, GetVoteDto} from './dto/upvotes.dto';
 
 @Controller('blackspots')
 export class BlackSpotsController {
@@ -54,6 +54,9 @@ export class BlackSpotsController {
   }
 
   @Post(":id/votes")
+  @ApiOkResponse({
+    type: GetVoteDto
+  })
   vote(@Body() dto: CreateVoteDto){
     return this.blackSpotsService.vote(dto.blackSpotId, dto.voterId, dto.type);
   }
