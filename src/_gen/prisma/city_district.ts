@@ -16,5 +16,5 @@ export class CityDistrict {
   plzCodes: string[];
 
   @ApiProperty({ isArray: true, type: () => SubjectOffice })
-  SubjectOffice: SubjectOffice[];
+  subjectOffices: SubjectOffice[];
 }

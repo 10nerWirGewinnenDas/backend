@@ -9,6 +9,9 @@ export class BlackSpot {
   name: string;
 
   @ApiProperty({ type: String })
+  description: string;
+
+  @ApiProperty({ type: String })
   latitude: string;
 
   @ApiProperty({ type: String })

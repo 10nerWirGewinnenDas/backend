@@ -10,4 +10,16 @@ export class City {
 
   @ApiProperty({ isArray: true, type: () => CityDistrict })
   districts: CityDistrict[];
+
+  @ApiProperty({ type: Number })
+  topLeftLat: number;
+
+  @ApiProperty({ type: Number })
+  topLeftLng: number;
+
+  @ApiProperty({ type: Number })
+  bottomRightLat: number;
+
+  @ApiProperty({ type: Number })
+  bottomRightLng: number;
 }

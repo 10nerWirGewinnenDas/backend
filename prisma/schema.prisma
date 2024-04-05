@@ -21,25 +21,36 @@ datasource db {
 }
 
 model BlackSpot {
-  id        String   @id @default(cuid())
-  name      String
-  latitude  String
-  longitude String
-  votes     Upvote[]
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  latitude    String
+  longitude   String
+  votes       Upvote[]
+}
+
+model Category {
+  id   String @id @default(cuid())
+  name String
+  city String
 }
 
 model City {
-  id        String         @id @default(cuid())
-  name      String
-  districts CityDistrict[]
+  id             String         @id @default(cuid())
+  name           String
+  districts      CityDistrict[]
+  topLeftLat     Float
+  topLeftLng     Float
+  bottomRightLat Float
+  bottomRightLng Float
 }
 
 model CityDistrict {
-  id            String          @id @default(cuid())
-  city          City            @relation(fields: [cityId], references: [id])
-  cityId        String
-  plzCodes      String[]
-  SubjectOffice SubjectOffice[]
+  id             String          @id @default(cuid())
+  city           City            @relation(fields: [cityId], references: [id])
+  cityId         String
+  plzCodes       String[]
+  subjectOffices SubjectOffice[]
 }
 
 model SubjectOffice {
@@ -56,9 +67,8 @@ enum SpotActionType {
 }
 
 model Upvote {
-  id     String    @id @default(cuid())
-  spot   BlackSpot @relation(fields: [spotId], references: [id])
-  spotId String
-
-  createdAt DateTime @default(now())
+  id        String    @id @default(cuid())
+  spot      BlackSpot @relation(fields: [spotId], references: [id])
+  spotId    String
+  createdAt DateTime  @default(now())
 }
