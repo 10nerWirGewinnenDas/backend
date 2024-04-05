@@ -71,4 +71,5 @@ model Upvote {
   spot      BlackSpot @relation(fields: [spotId], references: [id])
   spotId    String
   createdAt DateTime  @default(now())
+  voterId   String    @default(uuid())
 }

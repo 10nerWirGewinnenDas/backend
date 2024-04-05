@@ -3,7 +3,7 @@ import {PrismaService} from "../prisma/prisma.service";
 import {Cron} from "@nestjs/schedule";
 
 @Injectable()
-export class BlackspotsService {
+export class BlackSpotsService {
   constructor(
     private readonly prisma: PrismaService
   ) {}

@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
-import { BlackspotsService } from './blackspots.service';
+import { BlackSpotsService } from './blackspots.service';
+import { BlackSpotsController } from './blackspots.controller';
 
 @Module({
-  providers: [BlackspotsService]
+  providers: [BlackSpotsService],
+  controllers: [BlackSpotsController]
 })
 export class BlackspotsModule {}
