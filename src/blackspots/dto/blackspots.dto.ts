@@ -18,4 +18,4 @@ export class GetBlackSpotDto extends IntersectionType(PrismaModel.BlackSpot, Pri
     _count: BlackSpotCounts
 }
 
-export class BlackSpotCreatedDto extends IntersectionType(PrismaModel.BlackSpot, PrismaModel.Vote) {}
+export class BlackSpotCreatedDto extends IntersectionType(PrismaModel.BlackSpot, PrismaModel.Vote, PrismaModel.Category) {}
