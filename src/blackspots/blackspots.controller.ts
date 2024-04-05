@@ -103,7 +103,7 @@ export class BlackSpotsController {
 
     const token = this.jwtService.sign({type: "imageUpload", id: spot.id});
 
-    return res.set({'X-Upload-Token': token}).json(spot);
+    return res.set({'X-Upload-Token': token, 'Access-Control-Allow-Headers': '*'}).json(spot);
   }
 
   @Post(":id/image")
