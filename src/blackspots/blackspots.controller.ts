@@ -3,7 +3,6 @@ import {BlackSpotsService} from "./blackspots.service";
 import {PrismaService} from "../prisma/prisma.service";
 import {BlackSpotCreatedDto, CreateBlackSpotDto, GetBlackSpotDto} from "./dto/blackspots.dto";
 import {ApiOkResponse} from "@nestjs/swagger";
-import {v4} from "uuid";
 import {VoteType} from "@prisma/client";
 import {CreateVoteDto, GetVoteDto} from './dto/upvotes.dto';
 
@@ -53,12 +52,17 @@ export class BlackSpotsController {
     })
   }
 
-  @Post(":id/votes")
+  @Post(":id/vote")
   @ApiOkResponse({
     type: GetVoteDto
   })
   vote(@Body() dto: CreateVoteDto){
     return this.blackSpotsService.vote(dto.blackSpotId, dto.voterId, dto.type);
+  }
+
+  @Get(":id/unVote")
+  unVote(@Body() dto: CreateVoteDto){
+    return this.blackSpotsService.removeVotes(dto.blackSpotId, dto.voterId);
   }
 
 
