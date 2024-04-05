@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {Cron} from "@nestjs/schedule";
 import {VoteType} from "@prisma/client";
@@ -39,6 +39,17 @@ export class BlackSpotsService {
   }
 
   async vote(blackSpotId: string, voterId: string, voteType: VoteType){
+    const existingVoteWithUserID = await this.prisma.vote.findFirst({
+      where: {
+        spotId: blackSpotId,
+        voterId
+      }
+    });
+
+    if (existingVoteWithUserID) {
+      throw new BadRequestException('User already voted')
+    }
+
     const blackSpot = await this.prisma.blackSpot.findUnique({
       where: {
         id: blackSpotId
