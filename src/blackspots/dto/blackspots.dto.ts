@@ -9,6 +9,9 @@ export class CreateBlackSpotDto extends OmitType(PrismaModel.BlackSpot, ["id", "
 class BlackSpotCounts {
     @ApiProperty()
     votes: number;
+
+    @ApiProperty()
+    comments: number;
 }
 export class GetBlackSpotDto extends IntersectionType(PrismaModel.BlackSpot, PrismaModel.Category) {
     @ApiProperty({

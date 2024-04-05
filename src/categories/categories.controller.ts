@@ -1,4 +1,4 @@
-import {Controller, Get} from '@nestjs/common';
+import {Controller, Get, Query} from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {ApiOkResponse} from "@nestjs/swagger";
 import {GetCategoryDto} from "./dto/categories.dto";
@@ -13,7 +13,22 @@ export class CategoriesController {
   @ApiOkResponse({
     type: [GetCategoryDto]
   })
-  findAll(){
-    return this.prisma.category.findMany();
+  findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number){
+    if(!topLeftLat){
+      return this.prisma.category.findMany();
+    }else{
+      return this.prisma.blackSpot.findMany({
+        where: {
+          latitude: {
+            gte: bottomRightLat,
+            lte: topLeftLat
+          },
+          longitude: {
+            gte: topLeftLng,
+            lte: bottomRightLng
+          }
+        }
+      });
+    }
   }
 }
