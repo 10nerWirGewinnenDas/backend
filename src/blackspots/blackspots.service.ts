@@ -34,7 +34,8 @@ export class BlackSpotsService {
               }
             }
           }
-        }
+        },
+        comments: true
       }
     });
   }
