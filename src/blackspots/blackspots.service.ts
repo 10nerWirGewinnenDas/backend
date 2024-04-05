@@ -74,6 +74,16 @@ export class BlackSpotsService {
     })
   }
 
+  async removeVotes(blackSpotId: string, voterId: string){
+    return this.prisma.vote.deleteMany({
+      where: {
+        spotId: blackSpotId,
+        voterId
+      }
+    })
+  }
+
+
   @Cron("0 1 * * * *")
   async cleanup(){
     const thirtyDaysAgo = new Date();

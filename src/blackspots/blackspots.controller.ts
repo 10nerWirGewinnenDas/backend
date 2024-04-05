@@ -53,12 +53,17 @@ export class BlackSpotsController {
     })
   }
 
-  @Post(":id/votes")
+  @Post(":id/vote")
   @ApiOkResponse({
     type: GetVoteDto
   })
   vote(@Body() dto: CreateVoteDto){
     return this.blackSpotsService.vote(dto.blackSpotId, dto.voterId, dto.type);
+  }
+
+  @Get(":id/unVote")
+  unVote(@Body() dto: CreateVoteDto){
+    return this.blackSpotsService.removeVotes(dto.blackSpotId, dto.voterId);
   }
 
 
