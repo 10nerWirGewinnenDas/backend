@@ -20,12 +20,21 @@ export class BlackSpotsService {
             }
           }
         }
+      },
+      include: {
+        _count: {
+          select: {
+            votes: {
+              where: {
+                createdAt: {
+                  gte: thirtyDaysAgo
+                }
+              }
+            }
+          }
+        }
       }
     });
-  }
-
-  async create(data: {latitude: number, longitude: number}){
-
   }
 
   @Cron("0 1 * * * *")
