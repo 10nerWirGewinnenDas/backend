@@ -1,27 +1,16 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
 import { CreateCommentDto } from './dto/comments.dto';
+import { BlackSpotCommentsService } from './comments.service';
 
 @Controller('blackspots/comments')
 export class BlackSpotCommentsController {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly commentsService: BlackSpotCommentsService
   ) {}
 
   @Post()
   async createComment(@Body() dto: CreateCommentDto) {
-    return this.prisma.comment.create({
-      data: {
-        spot: {
-          connect: {
-            id: dto.spotId
-          }
-        },
-        authorName: dto.authorName,
-        createdAt: new Date(),
-        text: dto.text
-      }
-    })
+    return this.commentsService.createComment(dto);
   }
 
 }
