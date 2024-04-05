@@ -27,7 +27,6 @@ services:
       # - "./traefik_dynamic.toml:/etc/traefik/traefik_dynamic.toml" # Optional: Für erweiterte Traefik-Konfigurationen
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.blackspots.de`)"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=hackhpi:$$apr1$$WQA6wnFe$$iLy6O8rMIj.4v7DUyBJ1W."
