@@ -24,18 +24,21 @@ model BlackSpot {
   id          String    @id @default(cuid())
   name        String
   description String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  categoryId  String
   latitude    Float
   longitude   Float
   votes       Vote[]
-  Comment     Comment[]
+  comments    Comment[]
   finished    Boolean
   archived    Boolean
 }
 
 model Category {
-  id   String @id @default(cuid())
-  name String
-  city String
+  id    String      @id @default(cuid())
+  name  String
+  city  String
+  spots BlackSpot[]
 }
 
 model City {
