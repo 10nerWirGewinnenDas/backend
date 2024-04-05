@@ -9,10 +9,11 @@ generator client {
 }
 
 generator prismaClassGenerator {
-  provider   = "prisma-class-generator"
-  output     = "../src/_gen/prisma"
-  useSwagger = true
-  dryRun     = false
+  provider               = "prisma-class-generator"
+  output                 = "../src/_gen/prisma"
+  useSwagger             = true
+  dryRun                 = false
+  separateRelationFields = true
 }
 
 datasource db {
@@ -79,6 +80,8 @@ model Vote {
   spotId    String
   createdAt DateTime  @default(now())
   voterId   String    @default(uuid())
+
+  @@unique([spotId, voterId])
 }
 
 enum VoteType {

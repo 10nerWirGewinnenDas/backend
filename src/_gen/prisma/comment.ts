@@ -1,4 +1,3 @@
-import { BlackSpot } from './black_spot';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class Comment {
@@ -7,9 +6,6 @@ export class Comment {
 
   @ApiPropertyOptional({ type: String })
   authorName?: string;
-
-  @ApiProperty({ type: () => BlackSpot })
-  spot: BlackSpot;
 
   @ApiProperty({ type: String })
   spotId: string;

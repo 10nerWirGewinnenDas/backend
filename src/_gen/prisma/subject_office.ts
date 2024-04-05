@@ -1,4 +1,3 @@
-import { CityDistrict } from './city_district';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class SubjectOffice {
@@ -7,9 +6,6 @@ export class SubjectOffice {
 
   @ApiProperty({ type: String })
   name: string;
-
-  @ApiProperty({ type: () => CityDistrict })
-  district: CityDistrict;
 
   @ApiProperty({ type: String })
   districtId: string;

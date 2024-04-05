@@ -1,4 +1,3 @@
-import { BlackSpot } from './black_spot';
 import { VoteType } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -8,9 +7,6 @@ export class Vote {
 
   @ApiProperty({ enum: VoteType, enumName: 'VoteType' })
   type: VoteType;
-
-  @ApiProperty({ type: () => BlackSpot })
-  spot: BlackSpot;
 
   @ApiProperty({ type: String })
   spotId: string;
