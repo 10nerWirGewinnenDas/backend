@@ -24,8 +24,8 @@ model BlackSpot {
   id          String   @id @default(cuid())
   name        String
   description String
-  latitude    String
-  longitude   String
+  latitude    Float
+  longitude   Float
   votes       Upvote[]
 }
 
