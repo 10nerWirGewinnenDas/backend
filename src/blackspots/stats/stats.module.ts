@@ -7,4 +7,4 @@ import { BlackSpotStatsService } from './stats.service';
   providers: [BlackSpotStatsService],
   controllers: [BlackSpotStatsController]
 })
-export class BlackSpotsStatsModule {}
+export class BlackSpotStatsModule {}
