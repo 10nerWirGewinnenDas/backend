@@ -21,6 +21,7 @@ export class BlackSpotsController {
   @Post(":id/votes")
   vote(@Body() dto: CreateUpvoteDto){
     // ToDo: add vote to blackSpot
+
   }
 
 
