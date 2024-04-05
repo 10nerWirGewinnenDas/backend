@@ -34,7 +34,7 @@ export class BlackSpotsController {
 
   @Get()
   @ApiOkResponse({
-    type: GetBlackSpotDto
+    type: [GetBlackSpotDto]
   })
   @ApiQuery({
     name: "topLeftLat",
