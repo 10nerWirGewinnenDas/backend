@@ -13,4 +13,7 @@ export class Upvote {
 
   @ApiProperty({ type: Date })
   createdAt: Date;
+
+  @ApiProperty({ type: String })
+  voterId: string;
 }
