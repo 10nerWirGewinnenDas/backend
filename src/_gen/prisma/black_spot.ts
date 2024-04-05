@@ -11,11 +11,11 @@ export class BlackSpot {
   @ApiProperty({ type: String })
   description: string;
 
-  @ApiProperty({ type: String })
-  latitude: string;
+  @ApiProperty({ type: Number })
+  latitude: number;
 
-  @ApiProperty({ type: String })
-  longitude: string;
+  @ApiProperty({ type: Number })
+  longitude: number;
 
   @ApiProperty({ isArray: true, type: () => Vote })
   votes: Vote[];

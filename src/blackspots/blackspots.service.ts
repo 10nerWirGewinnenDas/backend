@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {Cron} from "@nestjs/schedule";
-import { VoteType } from '@prisma/client';
 
 @Injectable()
 export class BlackSpotsService {
@@ -21,12 +20,21 @@ export class BlackSpotsService {
             }
           }
         }
+      },
+      include: {
+        _count: {
+          select: {
+            votes: {
+              where: {
+                createdAt: {
+                  gte: thirtyDaysAgo
+                }
+              }
+            }
+          }
+        }
       }
     });
-  }
-
-  async create(data: {latitude: number, longitude: number}){
-
   }
 
   async vote(blackSpotId: string, voterId: string, voteType: VoteType){

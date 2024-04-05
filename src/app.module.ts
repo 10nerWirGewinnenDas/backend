@@ -3,11 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BlackspotsModule } from './blackspots/blackspots.module';
 import {PrismaModule} from "./prisma/prisma.module";
+import { CategoriesModule } from './categories/categories.module';
 
 @Module({
   imports: [
     BlackspotsModule,
-    PrismaModule
+    PrismaModule,
+    CategoriesModule
   ],
   controllers: [AppController],
   providers: [AppService],
