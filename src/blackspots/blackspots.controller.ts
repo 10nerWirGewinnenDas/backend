@@ -3,7 +3,6 @@ import {BlackSpotsService} from "./blackspots.service";
 import {PrismaService} from "../prisma/prisma.service";
 import {BlackSpotCreatedDto, CreateBlackSpotDto, GetBlackSpotDto} from "./dto/blackspots.dto";
 import {ApiOkResponse} from "@nestjs/swagger";
-import {v4} from "uuid";
 import {VoteType} from "@prisma/client";
 import {CreateVoteDto, GetVoteDto} from './dto/upvotes.dto';
 
