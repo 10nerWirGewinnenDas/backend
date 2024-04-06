@@ -36,6 +36,10 @@ export class BlackSpotsController {
     type: [GetBlackSpotDto]
   })
   @ApiQuery({
+    name: "voterId",
+    required: false
+  })
+  @ApiQuery({
     name: "topLeftLat",
     required: false
   })
@@ -88,7 +92,7 @@ export class BlackSpotsController {
         }
       });
     }else{
-      return this.blackSpotsService.findAll();
+      return this.blackSpotsService.findAll(voterId);
     }
   }
 
