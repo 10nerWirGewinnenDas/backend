@@ -4,11 +4,13 @@ import {Cron} from "@nestjs/schedule";
 import {VoteType} from "@prisma/client";
 import { CreateBlackSpotDto } from './dto/blackspots.dto';
 import { Response as Res } from 'express';
+import {JwtService} from "@nestjs/jwt";
 
 @Injectable()
 export class BlackSpotsService {
   constructor(
-    private readonly prisma: PrismaService
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService
   ) {}
 
   async findAll(){
