@@ -13,7 +13,7 @@ export class BlackSpotsService {
     private readonly jwtService: JwtService
   ) {}
 
-  async findAll(){
+  async findAll(voterId?: string){
     const thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
     return this.prisma.blackSpot.findMany({
@@ -39,6 +39,11 @@ export class BlackSpotsService {
             }
           }
         },
+        votes: voterId ? {
+          where: {
+            voterId
+          }
+        } : undefined,
         comments: true
       }
     });
