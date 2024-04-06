@@ -45,6 +45,11 @@ export class BlackSpotsService {
           }
         } : undefined,
         comments: true
+      },
+      orderBy: {
+        votes: {
+          _count: 'desc'
+        }
       }
     });
   }

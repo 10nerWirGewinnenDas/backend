@@ -89,6 +89,11 @@ export class BlackSpotsController {
               voterId
             }
           } : undefined
+        },
+        orderBy: {
+          votes: {
+            _count: 'desc'
+          }
         }
       });
     }else{
