@@ -51,6 +51,10 @@ export class BlackSpotsController {
     name: "bottomRightLng",
     required: false
   })
+  @ApiQuery({
+    name: "voterId",
+    required: false
+  })
   findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number, @Query("voterId") voterId?: string){
     if(topLeftLat){
       const thirtyDaysAgo = new Date();
