@@ -26,6 +26,13 @@ export class BlackSpotStatsService {
           _count: 'desc'
         }
       },
+      include: {
+        _count: {
+          select: {
+            votes: true
+          }
+        }
+      },
       take: 3
     });
   }
