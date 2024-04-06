@@ -124,7 +124,7 @@ export class BlackSpotsController {
           throw new BadRequestException("Token falsch du dummer Hurensohn")
         }
 
-        if(file.originalname.endsWith('.png') || file.originalname.endsWith('.jpg') || file.originalname.endsWith('.gif')){
+        if(file.originalname.endsWith('.png') || file.originalname.endsWith('.jpg') || file.originalname.endsWith('.gif') || file.originalname.endsWith('.jpeg')){
           await fs.promises.writeFile(`./uploads/${token.id}.${file.originalname.split('.')[file.originalname.split('.').length-1]}`, file.buffer);
         }
       }catch (e) {
@@ -152,9 +152,13 @@ export class BlackSpotsController {
         imageBuffer = await fs.promises.readFile(`./uploads/${blackSpotId}.jpg`);
       }catch (e) {
         try{
-          imageBuffer = await fs.promises.readFile(`./uploads/${blackSpotId}.gif`);
+          imageBuffer = await fs.promises.readFile(`./uploads/${blackSpotId}.jpeg`);
         }catch (e) {
-          throw new BadRequestException("No image found");
+          try{
+            imageBuffer = await fs.promises.readFile(`./uploads/${blackSpotId}.gif`);
+          }catch (e) {
+            throw new BadRequestException("No image found");
+          }
         }
       }
     }
