@@ -88,7 +88,7 @@ export class BlackSpotsController {
         }
       });
     }else{
-      return this.blackSpotsService.findAll();
+      return this.blackSpotsService.findAll(voterId);
     }
   }
 
