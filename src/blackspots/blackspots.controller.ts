@@ -51,7 +51,7 @@ export class BlackSpotsController {
     name: "bottomRightLng",
     required: false
   })
-  findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number){
+  findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number, @Query("voterId") voterId?: string){
     if(topLeftLat){
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -79,7 +79,12 @@ export class BlackSpotsController {
               }
             }
           },
-          comments: true
+          comments: true,
+          votes: voterId ? {
+            where: {
+              voterId
+            }
+          } : undefined
         }
       });
     }else{
