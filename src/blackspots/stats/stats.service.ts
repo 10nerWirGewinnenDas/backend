@@ -10,7 +10,7 @@ export class BlackSpotStatsService {
   async in10km(longitude: number, latitude: number){
     //get all blackspots in 10km radius with already given longitude and latitude:
 
-    const bs = await this.prisma.blackSpot.findMany({
+    return this.prisma.blackSpot.findMany({
       where: {
         latitude: {
           gte: parseFloat(String(latitude - 0.1)),
@@ -25,12 +25,9 @@ export class BlackSpotStatsService {
         votes: {
           _count: 'desc'
         }
-      }
+      },
+      take: 3
     });
-
-    bs.slice(0,3);
-
-    return bs;
   }
 
 }
