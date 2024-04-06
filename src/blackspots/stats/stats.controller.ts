@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiProperty, ApiQuery } from '@nestjs/swagger';
+import {ApiOkResponse, ApiProperty, ApiQuery} from '@nestjs/swagger';
 import { BlackSpotStatsService } from './stats.service';
+import {GetBlackSpotDto} from "../dto/blackspots.dto";
 
 export class BlackSpotGet10kmDTO {
   @ApiProperty()
@@ -24,6 +25,9 @@ export class BlackSpotStatsController {
   @ApiQuery({
     name: "longitude",
     required: true
+  })
+  @ApiOkResponse({
+    type: [GetBlackSpotDto]
   })
   async in10km(@Query("longitude") longitude: number, @Query("latitude") latitude: number){
     return this.statsService.in10km(longitude, latitude);
