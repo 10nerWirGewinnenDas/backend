@@ -115,10 +115,12 @@ export class BlackSpotsService {
   }
 
   async removeVotes(blackSpotId: string, voterId: string){
-    return this.prisma.vote.deleteMany({
+    return this.prisma.vote.delete({
       where: {
-        spotId: blackSpotId,
-        voterId
+        spotId_voterId: {
+          spotId: blackSpotId,
+          voterId
+        }
       }
     })
   }
