@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {Cron} from "@nestjs/schedule";
 import {VoteType} from "@prisma/client";
-import { CreateBlackSpotDto } from './dto/blackspots.dto';
+import {BlackSpotCreatedDto, CreateBlackSpotDto} from './dto/blackspots.dto';
 import { Response as Res } from 'express';
 import {JwtService} from "@nestjs/jwt";
 
@@ -44,7 +44,7 @@ export class BlackSpotsService {
     });
   }
 
-  async create(dto: CreateBlackSpotDto, res: Res){
+  async create(dto: CreateBlackSpotDto, res: Res) {
     const spot = await this.prisma.blackSpot.create({
       data: {
         name: dto.name,
@@ -66,7 +66,8 @@ export class BlackSpotsService {
         finished: false
       },
       include: {
-        votes: true
+        votes: true,
+        category: true
       }
     })
 
@@ -75,16 +76,18 @@ export class BlackSpotsService {
     return res.set({'X-Upload-Token': token, 'Access-Control-Expose-Headers': 'X-Upload-Token'}).json(spot);
   }
 
-  async vote(blackSpotId: string, voterId: string, voteType: VoteType){
-    const existingVoteWithUserID = await this.prisma.vote.findFirst({
-      where: {
-        spotId: blackSpotId,
-        voterId
-      }
-    });
+  async vote(blackSpotId: string, voteType: VoteType, voterId?: string){
+    if(voterId){
+      const existingVoteWithUserID = await this.prisma.vote.findFirst({
+        where: {
+          spotId: blackSpotId,
+          voterId
+        }
+      });
 
-    if (existingVoteWithUserID) {
-      throw new BadRequestException('User already voted')
+      if (existingVoteWithUserID) {
+        throw new BadRequestException('User already voted')
+      }
     }
 
     const blackSpot = await this.prisma.blackSpot.findUnique({

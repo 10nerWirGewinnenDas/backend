@@ -148,7 +148,7 @@ export class BlackSpotsController {
     type: GetVoteDto
   })
   vote(@Body() dto: CreateVoteDto){
-    return this.blackSpotsService.vote(dto.blackSpotId, dto.voterId, dto.type);
+    return this.blackSpotsService.vote(dto.blackSpotId, dto.type, dto.voterId);
   }
 
   @Get(":id/unVote")
