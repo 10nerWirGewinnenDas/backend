@@ -151,7 +151,7 @@ export class BlackSpotsController {
     return this.blackSpotsService.vote(dto.blackSpotId, dto.type, dto.voterId);
   }
 
-  @Get(":id/unVote")
+  @Post(":id/unVote")
   unVote(@Body() dto: CreateVoteDto){
     return this.blackSpotsService.removeVotes(dto.blackSpotId, dto.voterId);
   }
