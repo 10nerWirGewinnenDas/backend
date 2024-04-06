@@ -129,8 +129,18 @@ export class BlackSpotsController {
       type: "file"
     }
   })
-  getImage(@Param("id") blackSpotId: string){
-    return new StreamableFile(fs.createReadStream(`./uploads/${blackSpotId}.png`));
+  async getImage(@Param("id") blackSpotId: string){
+    let imageBuffer: Buffer;
+    try{
+      imageBuffer = await fs.promises.readFile(`./uploads/${blackSpotId}.png`);
+    }catch (e) {
+      try{
+        imageBuffer = await fs.promises.readFile(`./uploads/${blackSpotId}.jpg`);
+      }catch (e) {
+        throw new BadRequestException("No image found");
+      }
+    }
+    return new StreamableFile(imageBuffer);
   }
 
   @Post(":id/vote")
