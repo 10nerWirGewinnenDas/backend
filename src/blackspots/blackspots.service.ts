@@ -2,6 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import {PrismaService} from "../prisma/prisma.service";
 import {Cron} from "@nestjs/schedule";
 import {VoteType} from "@prisma/client";
+import { CreateBlackSpotDto } from './dto/blackspots.dto';
+import { Response as Res } from 'express';
 
 @Injectable()
 export class BlackSpotsService {
@@ -38,6 +40,37 @@ export class BlackSpotsService {
         comments: true
       }
     });
+  }
+
+  async create(dto: CreateBlackSpotDto, res: Res){
+    const spot = await this.prisma.blackSpot.create({
+      data: {
+        name: dto.name,
+        description: dto.description,
+        longitude: dto.longitude,
+        latitude: dto.latitude,
+        votes: {
+          create: {
+            type: VoteType.UP,
+            voterId: dto.voterId
+          }
+        },
+        category: {
+          connect: {
+            id: dto.categoryId
+          }
+        },
+        archived: false,
+        finished: false
+      },
+      include: {
+        votes: true
+      }
+    })
+
+    const token = this.jwtService.sign({type: "imageUpload", id: spot.id});
+
+    return res.set({'X-Upload-Token': token, 'Access-Control-Expose-Headers': 'X-Upload-Token'}).json(spot);
   }
 
   async vote(blackSpotId: string, voterId: string, voteType: VoteType){

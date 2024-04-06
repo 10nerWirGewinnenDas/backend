@@ -93,34 +93,7 @@ export class BlackSpotsController {
     type: BlackSpotCreatedDto
   })
   async create(@Body() dto: CreateBlackSpotDto, @Response() res: Res){
-    const spot = await this.prisma.blackSpot.create({
-      data: {
-        name: dto.name,
-        description: dto.description,
-        longitude: dto.longitude,
-        latitude: dto.latitude,
-        votes: {
-          create: {
-            type: VoteType.UP,
-            voterId: dto.voterId
-          }
-        },
-        category: {
-          connect: {
-            id: dto.categoryId
-          }
-        },
-        archived: false,
-        finished: false
-      },
-      include: {
-        votes: true
-      }
-    })
-
-    const token = this.jwtService.sign({type: "imageUpload", id: spot.id});
-
-    return res.set({'X-Upload-Token': token, 'Access-Control-Expose-Headers': 'X-Upload-Token'}).json(spot);
+    return this.blackSpotsService.create(dto, res);
   }
 
   @Post(":id/image")
