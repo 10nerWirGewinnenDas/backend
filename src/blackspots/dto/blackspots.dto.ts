@@ -13,7 +13,7 @@ class BlackSpotCounts {
     @ApiProperty()
     comments: number;
 }
-export class GetBlackSpotDto extends IntersectionType(PrismaModel.BlackSpot, PrismaModel.Category, PickType(PrismaModel.BlackSpotRelations, ["comments"])) {
+export class GetBlackSpotDto extends IntersectionType(PrismaModel.BlackSpot, PrismaModel.Category, PickType(PrismaModel.BlackSpotRelations, ["comments", "votes"])) {
     @ApiProperty({
         type: BlackSpotCounts
     })
