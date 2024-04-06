@@ -14,12 +14,11 @@ import {
 import {BlackSpotsService} from "./blackspots.service";
 import {PrismaService} from "../prisma/prisma.service";
 import {BlackSpotCreatedDto, CreateBlackSpotDto, GetBlackSpotDto} from "./dto/blackspots.dto";
-import {ApiBody, ApiConsumes, ApiOkResponse, ApiProperty, ApiQuery, ApiResponse} from "@nestjs/swagger";
+import {ApiBody, ApiConsumes, ApiOkResponse, ApiQuery, ApiResponse} from "@nestjs/swagger";
 import {VoteType} from "@prisma/client";
 import {CreateVoteDto, GetVoteDto} from './dto/upvotes.dto';
 import {Request, Response as Res} from "express";
-import {ConfigService} from "@nestjs/config";
-import {JwtModule, JwtService} from "@nestjs/jwt";
+import {JwtService} from "@nestjs/jwt";
 import {FileInterceptor} from "@nestjs/platform-express";
 import {FileUploadDto} from "../dto/file-upload.dto";
 import * as fs from "fs";

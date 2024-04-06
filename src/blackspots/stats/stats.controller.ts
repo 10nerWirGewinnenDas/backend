@@ -1,6 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
-import { JwtService } from '@nestjs/jwt';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiProperty, ApiQuery } from '@nestjs/swagger';
 import { BlackSpotStatsService } from './stats.service';
 
