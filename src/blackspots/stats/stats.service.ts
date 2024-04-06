@@ -13,12 +13,12 @@ export class BlackSpotStatsService {
     return this.prisma.blackSpot.findMany({
       where: {
         latitude: {
-          gte: parseFloat(String(latitude - 0.1)),
-          lte: parseFloat(String(latitude + 0.1))
+          gte: parseFloat(String(latitude)) - 0.1,
+          lte: parseFloat(String(latitude)) + 0.1
         },
         longitude: {
-          gte: parseFloat(String(longitude - 0.1)),
-          lte: parseFloat(String(longitude + 0.1))
+          gte: parseFloat(String(longitude)) - 0.1,
+          lte: parseFloat(String(longitude)) + 0.1
         }
       },
       orderBy: {
