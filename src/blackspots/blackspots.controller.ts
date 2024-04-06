@@ -119,7 +119,7 @@ export class BlackSpotsController {
           throw new BadRequestException("Token falsch du dummer Hurensohn")
         }
 
-        if(file.originalname.endsWith('.png') || file.originalname.endsWith('.jpg') || file.originalname.endsWith('.jpg')){
+        if(file.originalname.endsWith('.png') || file.originalname.endsWith('.jpg') || file.originalname.endsWith('.gif')){
           await fs.promises.writeFile(`./uploads/${token.id}.${file.originalname.split('.')[file.originalname.split('.').length-1]}`, file.buffer);
         }
       }catch (e) {
