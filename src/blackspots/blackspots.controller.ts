@@ -36,6 +36,10 @@ export class BlackSpotsController {
     type: [GetBlackSpotDto]
   })
   @ApiQuery({
+    name: "voterId",
+    required: false
+  })
+  @ApiQuery({
     name: "topLeftLat",
     required: false
   })
@@ -49,10 +53,6 @@ export class BlackSpotsController {
   })
   @ApiQuery({
     name: "bottomRightLng",
-    required: false
-  })
-  @ApiQuery({
-    name: "voterId",
     required: false
   })
   findAll(@Query("topLeftLat") topLeftLat?: number, @Query("topLeftLng") topLeftLng?: number, @Query("bottomRightLat") bottomRightLat?: number, @Query("bottomRightLng") bottomRightLng?: number, @Query("voterId") voterId?: string){
